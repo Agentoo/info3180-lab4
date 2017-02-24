@@ -14,6 +14,21 @@ from werkzeug.utils import secure_filename
 # Routing for your application.
 ###
 
+@app.route('/filelisting', methods=['POST','GET'])
+def getfiles():
+    a= listfiles()
+    return render_template('files.html', b=a )
+    
+def listfiles():
+    rootdir = os.getcwd()
+    print rootdir
+    ufiles = []
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+        for file in files:
+            ufiles.append(file)
+            print os.path.join(subdir, file)
+    return ufiles
+    
 @app.route('/')
 def home():
     """Render website's home page."""
